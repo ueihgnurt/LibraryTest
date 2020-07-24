@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   scope "(:locale)", locale: /en|vi/ do
     resources :users
+    resources :books
+    resources :authors
   end
-
-
 end

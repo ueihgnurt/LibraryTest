@@ -16,10 +16,6 @@ module SessionsHelper
 		end
 	end
 
-	def user_signed_in?
-		current_user.present?
-	end
-
 	def current_user?(user)
 		user && user == current_user
 	end
@@ -31,5 +27,9 @@ module SessionsHelper
 	def log_out
 		session.delete(:user_id)
 		@current_user = nil
+	end
+
+	def admin?
+		session[:user_id] == 1 
 	end
 end
