@@ -73,3 +73,8 @@ yarn-debug.log*
 /.rubocop_disabled.yml
 /.rubocop_enabled.yml
 /.rubocop.yml
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
+config/database.yml

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Library</title>
+    <title>Project1</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload" %>
@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
   </head>
- <%= render 'layouts/header' %>
+ <%= render "layouts/header" %>
 <body>
     <div>
       <%= link_to "English", locale:"en" %>
@@ -18,5 +18,5 @@
     </div>
     <%= yield %>
   </body>
-   <%= render 'layouts/footer' %>
+   <%= render "layouts/footer" %>
 </html>
