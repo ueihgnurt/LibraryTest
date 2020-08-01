@@ -13,6 +13,9 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: {minimum: Settings.PW}, allow_nil: true
   scope :lastest, ->{order created_at: :DESC}
+  #ManytoMany User_Review_Book
+	has_many :reviews, dependent: :destroy
+	has_many :reviewed_books, through: :reviews, source: :book
 
   def create_cart
     carts.create(verify: 3) if save

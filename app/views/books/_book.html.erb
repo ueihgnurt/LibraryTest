@@ -2,7 +2,7 @@
     <div class="book-list-icon yellow-icon"></div>
     <figure>
         <a href="books/<%= book.id%>">
-            <img src="../assets/books/<%= book.book_img_file_name %>" class="book_index" style="height: 450px; width: 355px">      
+            <img src="../assets/books/<%= book.book_img_file_name %>" class="book_index" style="height: 450px; width: 355px">
         </a>
         <figcaption>
             <header>
@@ -13,9 +13,17 @@
             <div class="actions">
                 <ul>
                     <li>
-                        <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Add TO CART">
-                            <i class="fa fa-shopping-cart"></i>
-                        </a>
+                        <%= link_to requests_path(book_id: book.id),
+                                    {
+                                        method: :post,
+                                        remote: true
+                                    },{
+                                    :target => "_blank",
+                                    'data-toggle' => 'blog-tags', 
+                                    'data-placement' => 'top', 
+                                    :title => 'ADD TO CART'} do%>
+                        <i class="fa fa-shopping-cart"></i>
+                        <% end %>
                     </li>
                     <li>
                         <a href="#" target="_blank" data-toggle="blog-tags" data-placement="top" title="Like">
@@ -35,5 +43,5 @@
                 </ul>
             </div>
         </figcaption>
-    </figure>                                                
+    </figure>
 </li>

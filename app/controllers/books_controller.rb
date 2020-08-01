@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :find_book, only: [:show]
+  before_action :find_book, only: %i[show edit update destroy]
   before_action :find_user, only: [:show]
 
   def new
@@ -8,19 +8,9 @@ class BooksController < ApplicationController
   end
 
   def index
-    @categories = Category.all
-    @authors = Author.all
-    @q = Book.search(params[:q])
-    @search = @q.result(distinct: true)
-
-    @pagy, @books = pagy(@search.order('created_at DESC'), items: 9)
+    @search = Book.search_name(params[:keyword]).sort_created_at
     @sort = ['Default', 'Name of book', 'Name of author']
-    respond_to do |format|
-      format.html
-      format.js
-      format.json { render json: @books }
-    end
-    # byebug
+    @pagy, @books = pagy(@search, items: 9)
   end
 
   def show
@@ -47,6 +37,25 @@ class BooksController < ApplicationController
     end
   end
 
+  def edit; end
+
+  def update
+    if !@book.nil? && @book.update(book_params)
+      redirect_to book_path
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    if !@book.nil?
+      @book.destroy
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
+
   private
 
   def book_params
@@ -56,7 +65,7 @@ class BooksController < ApplicationController
   end
 
   def find_book
-    @book = Book.find(params[:id])
+    @book = Book.find_by(id: params[:id])
   end
 
   def find_user

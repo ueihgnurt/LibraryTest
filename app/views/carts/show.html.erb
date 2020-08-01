@@ -1,0 +1,97 @@
+<%= render "banner" %>
+<% if @cart.verify == 3 && !cart_empty?(@cart.id)%>
+<div class="table-users">
+    <div class="header">Carts</div>
+    <table cellspacing="0">
+        <tr>
+            <th>Book</th>
+            <th>Available</th>
+            <th>Get</th>
+            <th style="width: 70px;">DayFrom</th>
+            <th style="width: 70px;">DayTo</th>
+            <th style="width: 10px;">Option</th>
+        </tr>
+        <% @requests.each do |r|  %>
+        <%= render partial: "carts/request", object: r, as: :r %>
+        <% end %>
+    </table>
+</div>
+<div style="float:right; margin-right: 19%">
+    <%= link_to "Borrow", confirm_cart_path(@cart.id), id: "borrow", class: "btn btn-borrow"%>
+</div>
+<% else %>
+<h1 style="text-align: center; margin-top: 100px;">
+    Your cart is emptying <i class="far fa-frown"></i>
+</h1>
+<h1 style="text-align: center; margin-top: 100px;">
+    Your history's cart is emptying <i class="far fa-frown"></i>
+</h1>
+<%= link_to books_url  do %>
+<h3 style="text-align: center; ">
+    <i class="fas fa-arrow-right"></i>Go to Book & Media
+</h3>
+<% end %>
+<% end %>
+
+<style type="text/css">
+    .btn-borrow {
+        background-color: #ff7236;
+        color: white;
+
+    }
+
+    .btn-borrow:hover {
+        background-color: #ff4e03;
+        color: #white;
+    }
+</style>
+
+<script type="text/javascript">
+    link = window.location.href
+    var dateto = Array.from(document.querySelectorAll("#request_dateto"));
+    var quantity = Array.from(document.querySelectorAll("#request_number"))
+    var checkQuantity = Array.from(document.querySelectorAll("#storeQuanity"))
+    var arr1 = dateto.map(d => d.value)
+    var arr2 = quantity.map(d => d.value)
+    var arrQuantity = checkQuantity.map(d => d.innerText);
+    console.log(arrQuantity)
+
+    $(document).on('click keyup', '#request_number, #request_dateto', function() {
+        quantity = Array.from(document.querySelectorAll("#request_number"))
+        dateto = Array.from(document.querySelectorAll("#request_dateto"))
+        checkQuantity = Array.from(document.querySelectorAll("#storeQuanity"))
+        arr2 = quantity.map(d => d.value)
+        arr1 = dateto.map(d => d.value)
+        arrQuantity = checkQuantity.map(d => d.innerText);
+    })
+
+    $('#borrow').click(function(e) {
+        var check = true
+        e.preventDefault();
+        arr2.forEach(function(e, index) {
+            if (parseInt(e) > parseInt(arrQuantity[index])) {
+                alertify
+                    .alert("Vua qua so luong").setHeader('<em>Thong bao</em>');
+                check = false;
+                return;
+            }
+        })
+        if (check === true) {
+            $.ajax({
+                method: "POST",
+                url: "/carts/" + "<%=@cart.id%>" + "/confirm",
+                data: {
+                    "dateto": arr1,
+                    "number": arr2
+                },
+                dataType: "script",
+                success: function(res) {
+                    console.log(res)
+                },
+                error: function(err) {
+                    console.log(err)
+                }
+            })
+        } else return;
+    })
+</script>

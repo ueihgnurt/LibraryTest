@@ -1,0 +1,53 @@
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="signin-main">
+                <div class="container">
+                    <div class="woocommerce">
+                        <div class="woocommerce-login">
+                            <div class="company-info signin-register">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="company-detail bg-dark margin-center">
+                                                <div class="signin-head">
+                                                    <h2 style="text-align: center;">Your Comment</h2>
+                                                    <span class="underline center"></span>
+                                                </div>
+                                                <div class="row ">
+                                                    <%= form_for(@review) do |f| %>
+                                                    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+                                                    <div class="field">
+                                                        <div id="star-rating"></div>
+                                                    </div>
+                                                    <%= f.label :comment %>
+                                                    <%= f.text_area :comment,  class: 'form-control col-md-12' %>
+                                                    <%= f.hidden_field :book_id %>
+                                                    <%= f.hidden_field :user_id%>
+                                                    <div>
+                                                        <div class="form-actions">
+                                                            <%= f.button :submit, class:"btn btn-primary col-md-6" %>
+                                                            <%= link_to 'Back', book_path(@review.book_id), class:"btn btn-cancel col-md-6 " %>
+                                                        </div>
+                                                        <% end %>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    $('#star-rating').raty({
+        path: '/assets/',
+        scoreName: 'review[rating]'
+    });
+</script>

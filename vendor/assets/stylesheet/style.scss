@@ -16385,6 +16385,19 @@ a:focus {
 .single-book-box img {
   width: 100%;
 }
+.star-rating {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+  padding: 1rem 0;
+  padding-left: 1.25rem;
+  img {
+    margin-top: 0.375rem;
+    width: 4%;
+    width: 16 px;
+    height: 16 px;
+  }
+}
+
+
 .single-book-box .books-social-sharing {
   background-color: #fff;
   left: -55px;
