@@ -71,14 +71,14 @@ end
 # likebook = books[15..30]
 # likebook.each { |book| user2.like_book(book)}
 
-# #Review
-# # users = User.all
-# # users.each do |user|
-# #     rating = rand(1..5)
-# #     content = Faker::Quotes::Shakespeare.as_you_like_it_quote
-# #     book = Book.all[rand(Book.all.count)]
-# #     Review.create!(rating: rating,content: content, user_id: user.id, book_id: book.id)
-# # end
+# Review
+users = User.all
+users.each do |user|
+    rating = rand(1..5)
+    comment = Faker::Quotes::Shakespeare.as_you_like_it_quote
+    book = Book.all[rand(Book.all.count)]
+    Review.create!(rating: rating,comment: comment, user_id: user.id, book_id: book.id)
+end
 
 # #User_Follow_User
 # users = User.all

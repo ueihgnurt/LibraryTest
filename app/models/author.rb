@@ -12,4 +12,6 @@ class Author < ApplicationRecord
                     default_url: "/assets/missing_author.png"
   validates_attachment_content_type :author_img,
                                     content_type: %r{\Aimage/.*\z}
+  scope :search_name, ->(param) { where 'name LIKE ?', "%#{param}%" if param.present?}
+  scope :sort_created_at, -> {order created_at: :DESC}
 end
