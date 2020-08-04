@@ -1,29 +1,24 @@
 Rails.application.routes.draw do
-  root 'static_pages#Home'
+  root "static_pages#Home"
 
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  delete '/loguot', to: 'sessions#destroy'
-  get '/signup', to: 'users#new'
-  post '/signup', to: 'users#create'
+  get "/login",to: "sessions#new"
+  post "/login", to: "sessions#create"
+  delete "/logout", to:"sessions#destroy"
+  get "/signup", to: "users#new"
+  post "/signup",  to: "users#create"
+  patch "/users/:id/edit" ,to:"users#update"
+  get "/users/:id/edit" ,to:"users#create"
+  post "/follows",  to: "follows#create"
+  delete "/follows" ,to:"follows#destroy"
 
-  scope '(:locale)', locale: /en|vi/ do
+  scope "(:locale)", locale: /en|vi/ do
     resources :users
-    resources :authors
-    resources :reviews
-    resources :requests
-    get "/my_cart/:id", to: "carts#my_cart"
-    resources :carts do
-      member do
-        # get "confirm"
-        post 'confirm'
-        get 'accept'
-        get 'decline'
-        get 'detail'
-      end
-    end
-    resources :books do
-      resources :reviews
+    resources :sessions, only: [:new, :create, :destroy]
+  end
+
+  resources :users do
+    member do
+      get :followings, :followers
     end
   end
 end

@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :load_user, except: [:index, :new, :create ]
-  before_action :logged_in_user, except: [:new, :show, :create ]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :load_user, except: %i(index new create)
+  before_action :logged_in_user, except: %i(new show create)
+  before_action :correct_user, only: %i(edit update)
   before_action :admin_user, only: :destroy
 
   def index
-    @users = User.lastest.paginate(page: params[:page] )
+    @pagy, @users = pagy(User.all.lastest)
   end
 
   def new
-    @user= User.new
+    @user = User.new
   end
 
-  def show;end
+  def show; end
 
   def create
     @user = User.new(user_params)
@@ -20,18 +22,19 @@ class UsersController < ApplicationController
       flash[:info] = I18n.t("Please check your email to activate your account.")
       redirect_to root_url
     else
-    render :new
+      render :new
     end
   end
 
   def edit; end
 
   def update
+
     if @user.update(user_params)
       flash[:success] = I18n.t("Profile updated")
       redirect_to @user
     else
-    render :edit
+      render :edit
     end
   end
 
@@ -60,12 +63,13 @@ class UsersController < ApplicationController
   end
 
   def correct_user
-    redirect_to (root_url)  unless current_user? @user
+    redirect_toroot_url unless current_user? @user
   end
 
   def load_user
     @user = User.find_by id: params[:id]
     return if @user
+
     flash[:warming] = I18n.t("user not found")
     redirect_to root_path
   end

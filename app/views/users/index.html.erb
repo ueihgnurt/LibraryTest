@@ -1,0 +1,36 @@
+<section class="page-banner services-banner">
+    <div class="container">
+        <div class="banner-header">
+            <h2>Sign Up</h2>
+        </div>
+        <div class="breadcrumb">
+            <ul>
+                <li><%= link_to "Home", root_url %></li>
+                <li>Users</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="signin-main">
+                <div class="container">
+                    <div class="woocommerce">
+                        <div class="woocommerce-login">
+                            <div class="company-info signin-register">
+                                <div class="col-md-6 col-md-offset-3">
+                                   <div class="company-detail bg-dark margin-center">
+                                        <div class="pagination" style="float: right; margin-right: 150px"><%== pagy_bootstrap_nav(@pagy)%></div>
+                                            <%=render @users%>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<!-- Start: Page Banner -->
+<section class="page-banner services-banner">
+    <div class="container">
+        <div class="banner-header">
+            <h2>Edit profile</h2>
+        </div>
+        <div class="breadcrumb">
+            <ul>
+                <li><%= link_to "Home", root_url %></li>
+                <li>Edit profile</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- End: Page Banner -->
+
+<!-- Start: Cart Section -->
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="signin-main">
+                <div class="container">
+                    <div class="woocommerce">
+                        <div class="woocommerce-login">
+                            <div class="company-info signin-register">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="company-detail bg-dark margin-center">
+                                                 <%= gravatar_for @user %>
+                                                  <a href="http://gravatar.com/emails",>change image</a>
+                                                  <span class="underline center"></span>
+                                                <div class="signin-head">
+
+                                                    <h2 style="text-align: center;" >Change profile</h2>
+                                                    <span class="underline center"></span>
+                                                </div>
+
+                                                <form class="login" method="post">
+                                                  <div class="row">
+                                                    <div class="span6 offset3">
+                                                    <%= form_for @user do |f| %>
+                                                        <%= render 'shared/error_messages', object: f.object %>
+
+                                                        <%= f.label :name %>
+                                                        <%= f.text_field :name %>
+
+                                                        <%= f.label :email %>
+                                                        <%= f.text_field :email %>
+
+                                                        <%= f.label :password %>
+                                                        <%= f.password_field :password %>
+
+                                                        <%= f.label :password_confirmation, "Confirm Password" %>
+                                                        <%= f.password_field :password_confirmation %>
+
+                                                        <%= f.submit "Save changes", class: "btn btn-primary" %>
+                                                      <% end %>
+                                                    </div>
+                                                  </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

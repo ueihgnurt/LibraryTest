@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
+  has_many :received_follows, foreign_key: :followed_id, class_name: "Follow", dependent: :destroy
+  has_many :followers, through: :received_follows, source: :follower
+  has_many :given_follows, foreign_key: :follower_id, class_name: "Follow", dependent: :destroy
+  has_many :followings, through: :given_follows, source: :followed
   after_create :create_cart
   validates :email, uniqueness: {case_sensitive: false}
   has_many :carts, dependent: :destroy
@@ -8,15 +14,11 @@ class User < ApplicationRecord
   validates :name, presence: true, length: {maximum: Settings.NAME}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   validates :email, presence: true, length: {maximum: Settings.EMAIL},
-    format: {with: VALID_EMAIL_REGEX},
-    uniqueness: {case_sensitive: false}
+                    format: {with: VALID_EMAIL_REGEX},
+                    uniqueness: {case_sensitive: false}
   has_secure_password
   validates :password, presence: true, length: {minimum: Settings.PW}, allow_nil: true
   scope :lastest, ->{order created_at: :DESC}
-  #ManytoMany User_Review_Book
-	has_many :reviews, dependent: :destroy
-	has_many :reviewed_books, through: :reviews, source: :book
-
   def create_cart
     carts.create(verify: 3) if save
   end
@@ -30,18 +32,30 @@ class User < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
-  def authenticated? attribute,remember_token
+  def authenticated? attribute, remember_token
     digest = send("#{attribute}_digest")
     return false unless remember_digest
+
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
   def lastest; end
+
+  def follow other_user
+    given_follows.create!(followed_id: other_user.id)
+  end
+
+  def unfollow other_user
+    given_follows.find_by(id: other_user.id).destroy
+  end
+
+  def following? other_user
+    given_follows.find_by(followed_id: other_user.id)
+  end
 
   private
 
   def downcase_email
     self.email = email.downcase
   end
-
 end

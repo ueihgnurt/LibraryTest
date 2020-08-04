@@ -1,0 +1,8 @@
+
+<div id="follow_form">
+<% if current_user.following?(@user) %>
+<%= button_to 'Unfollow', follows_path(@user,current_user.given_follows.find_by_followed_id(@user.id)), method: :delete, remote: true ,class: 'btn btn-success btn-block' %>
+<% else %>
+<%= button_to 'Follow',follows_path(@user,current_user.given_follows.build(followed_id: @user.id), remote: true), class: 'btn btn-success btn-block' %>
+<% end %>
+</div>
