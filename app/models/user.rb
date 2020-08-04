@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
-
   after_create :create_cart
   validates :email, uniqueness: {case_sensitive: false}
   has_many :carts, dependent: :destroy
@@ -8,6 +6,7 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
   validates :name, presence: true, length: {maximum: Settings.NAME}
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   validates :email, presence: true, length: {maximum: Settings.EMAIL},
     format: {with: VALID_EMAIL_REGEX},
     uniqueness: {case_sensitive: false}
@@ -31,10 +30,9 @@ class User < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
-  def authenticated? attribute, remember_token
+  def authenticated? attribute,remember_token
     digest = send("#{attribute}_digest")
     return false unless remember_digest
-
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
@@ -45,4 +43,5 @@ class User < ApplicationRecord
   def downcase_email
     self.email = email.downcase
   end
+
 end
