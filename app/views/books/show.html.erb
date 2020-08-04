@@ -44,7 +44,6 @@
                                     <li>
                                         <%= link_to new_book_review_path(@book),
                                     {
-                                    'target' => '_blank',
                                     'data-toggle' => 'blog-tags', 
                                     'data-placement' => 'top',
                                     :title => 'Comment'} do%>
@@ -58,7 +57,6 @@
                                         method: :post,
                                         remote: true
                                     },{
-                                    'target' => '_blank',
                                     'data-toggle' => 'blog-tags', 
                                     'data-placement' => 'top',
                                     :title => 'Edit'} do%>
@@ -73,7 +71,6 @@
                                         remote: true,
                                         data: { confirm: "You sure?", remote: true }
                                     },{
-                                    :target => '_blank',
                                     'data-toggle' => 'blog-tags', 
                                     'data-placement' => 'top',    
                                     :title => 'DELETE'} do%>

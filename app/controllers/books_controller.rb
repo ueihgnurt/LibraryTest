@@ -8,11 +8,9 @@ class BooksController < ApplicationController
   end
 
   def index
-    @categories = Category.all
-    @authors = Author.all
-    @search = !params[:keyword].nil? ? Book.where('lower(name) LIKE ?', "%#{params[:keyword]}%") : Book.all
-    @pagy, @books = pagy(@search.order('created_at DESC'), items: 9)
+    @search = Book.search_name(params[:keyword]).sort_created_at
     @sort = ['Default', 'Name of book', 'Name of author']
+    @pagy, @books = pagy(@search, items: 9)
   end
 
   def show
@@ -42,7 +40,7 @@ class BooksController < ApplicationController
   def edit; end
 
   def update
-    if @book.update(book_params)
+    if !@book.nil? && @book.update(book_params)
       redirect_to book_path
     else
       render 'edit'
@@ -50,9 +48,11 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book.destroy
-    respond_to do |format|
-      format.js
+    if !@book.nil?
+      @book.destroy
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
@@ -65,7 +65,7 @@ class BooksController < ApplicationController
   end
 
   def find_book
-    @book = Book.find(params[:id])
+    @book = Book.find_by(id: params[:id])
   end
 
   def find_user

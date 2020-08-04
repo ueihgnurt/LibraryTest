@@ -6,8 +6,8 @@ class AuthorsController < ApplicationController
   end
 
   def index
-    @search = !params[:keyword].nil? ? Author.where('lower(name) LIKE ?', "%#{params[:keyword]}%") : Author.all
-    @pagy, @authors = pagy(@search.order('created_at DESC'), items: 9)
+    @search = Author.search_name(params[:keyword]).sort_created_at
+    @pagy, @authors = pagy(@search, items: 9)
   end
 
   def show
