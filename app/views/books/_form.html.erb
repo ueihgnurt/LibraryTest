@@ -3,7 +3,7 @@
     <%= form_for(@book) do |f| %>
       
       <%=f.label :author %>
-      <%= f.collection_select :author_id, Author.all, :id, :name, {:class => 'form-control'} %>
+      <%= f.collection_select :author_id,get_author, :id, :name, {:class => 'form-control'} %>
 
       <div id="categories">
         <%= f.fields_for :bookcategories do |bc| %>

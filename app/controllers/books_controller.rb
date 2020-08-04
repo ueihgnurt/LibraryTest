@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class BooksController < ApplicationController
-  before_action :find_book, only: %i[show edit update destroy]
-  before_action :find_user, only: [:show]
+  before_action :find_book, except: %i[new index create]
 
   def new
     @book = Book.new
@@ -40,20 +41,14 @@ class BooksController < ApplicationController
   def edit; end
 
   def update
-    if !@book.nil? && @book.update(book_params)
-      redirect_to book_path
-    else
-      render 'edit'
-    end
+    return redirect_to book_path if @book.update(book_params)
+
+    redirect_to edit_book_path
   end
 
   def destroy
-    if !@book.nil?
-      @book.destroy
-      respond_to do |format|
-        format.js
-      end
-    end
+    @book.destroy
+    redirect_to books_path
   end
 
   private
@@ -66,9 +61,9 @@ class BooksController < ApplicationController
 
   def find_book
     @book = Book.find_by(id: params[:id])
-  end
+    return if @book
 
-  def find_user
-    @user = current_user
+    flash[:danger] = 'this book is not existed'
+    render :index
   end
 end

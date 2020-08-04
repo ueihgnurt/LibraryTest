@@ -57,22 +57,11 @@
                             </li>
                             <li><a href="#">Services</a></li>
                             <li><a href="#">Contact</a></li>
-                            <li class="dropdown">
-                                <% if logged_in? %>
-                                <a data-toggle="dropdown" class="dropdown-toggle disabled" href="#"><%= link_to "Cart" %></a>
-                                <ul class="dropdown-menu">
-                                    <li><%= link_to "Cart" %></li>
-                                    <li> <%= link_to "History of Cart", "/my_cart/"+ current_user.id.to_s, method: :get %></li>
-                                </ul>
-                                <% else %>
-                                <a data-toggle="dropdown" class="dropdown-toggle disabled" href="#"><%= link_to "Cart", login_path %></a>
-                                <ul class="dropdown-menu">
-                                    <li><%= link_to "Cart", login_path %></li>
-                                    <li> <%= link_to "History of Cart", login_path, method: :get %></li>
-                                </ul>
-                                <% end %>
-
-                            </li>
+                            <% if logged_in? %>
+                              <li> <%= link_to "Carts", "/my_cart/"+ current_user.id.to_s, method: :get %></li>
+                            <% else %>
+                              <li> <%= link_to "Carts", login_path, method: :get %></li>
+                            <% end %>
                             <% if logged_in? && admin? %>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle disabled" href="#">Manage</a>
@@ -81,12 +70,24 @@
                                         <%= link_to "Manage of cart", carts_path, method: :get %>
                                     </li>
                                     <li>
-                                        <%= link_to "Manage of author", '', method: :get%>
+                                        <%= link_to "Manage of author", admin_authors_path, method: :get%>
                                     </li>
-                                    <li><%= link_to "Manage of category", '',method: :get %></li>
                                 </ul>
                             </li>
                             <% end %>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle disabled">
+                                    <%if locale== :en%>
+                                      <%= link_to "Eng" %>
+                                    <%else%>
+                                      <%= link_to "Vie" %>
+                                    <%end%>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><%= link_to "English", locale:"en" %></li>
+                                    <li><%= link_to "Vietnamese", locale:"vi" %></li>
+                                </ul>
+                            </li>
                             </ul>
                         </div>
                     </div>

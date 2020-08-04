@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RequestsController < ApplicationController
   before_action :find_user, only: %i[new create destroy]
   before_action :find_book, only: %i[new create]

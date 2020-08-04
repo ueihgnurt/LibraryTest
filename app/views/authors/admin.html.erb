@@ -1,0 +1,37 @@
+<%= render "banner" %>
+<%= render "search" %>
+<!-- # 3: carting, 0:pending, 1: accept, 2: decline -->
+<% if @authors %>
+  <div class="table-users" style="margin-top: 70px;">
+      <div class="header">
+        History of Authors
+      </div>
+      <table cellspacing="0">
+          <tr>
+              <th>
+                Author name 
+                <%if @sort == "asc"%>
+                  <%= link_to "", admin_authors_path(sort:"desc"),class:"fa fa-arrow-up"%>
+                <%else%>
+                  <%= link_to "", admin_authors_path(sort:"asc"),class:"fa fa-arrow-down"%>
+                <%end%>
+              </th>
+              <th>Email</th>
+              <th>Option</th>
+          </tr>
+          <% @authors.each do |c| %>
+          <%= render partial: "authors/manage_author", object: c, as: :c %>
+          <% end %>
+      </table>
+      <div class="pagination" style="float: right; margin-right: 325px"><%== pagy_bootstrap_nav(@pagy)%></div>
+  </div>
+<% else %>
+  <h1 style="text-align: center; margin-top: 100px;">
+      Users's Cart is emptying <i class="far fa-frown"></i>
+  </h1>
+  <%= link_to books_url  do %>
+  <h3 style="text-align: center; ">
+      <i class="fas fa-arrow-right"></i>Go to Book & Media
+  </h3>
+  <% end %>
+<% end %>

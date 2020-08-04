@@ -1,0 +1,10 @@
+<tr>
+  <tr>
+    <th><%=c.name%></th>
+    <th><%=c.email%></th>
+    <th>
+      <%= link_to "", author_path(c.id),  method: :get,     class: "fa fa-pencil fa-2x",style: "color: #035777; padding-left: 17px" %>
+      <%= link_to "", "/authors/#{c.id}", method: :delete,  class: "fa fa-trash fa-2x", style: "color: #035777; padding-left: 17px",data: {confirm: "Are you sure?"}%>
+    </th>
+  </tr>
+</tr>

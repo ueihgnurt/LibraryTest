@@ -19,12 +19,10 @@
                                 <option selected="selected">Default sorting</option>
                                 <option>Sort by popularity</option>
                                 <option>Sort by rating</option>
-                                <option>Sort by newness</option>
-                                <option>Sort by price</option>
                             </select>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <div class="filter-result">Showing items 1 to 9 of <%= Author.count%> total</div>
+                            <div class="filter-result">Showing items 1 to 9 of <%=get_author.size%> total</div>
                         </div>
                     </div>
                 </div>

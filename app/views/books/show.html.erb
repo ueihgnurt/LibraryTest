@@ -65,17 +65,7 @@
                                     </li>
 
                                     <li>
-                                        <%= link_to book_path(@book) ,
-                                    {
-                                        method: :delete,
-                                        remote: true,
-                                        data: { confirm: "You sure?", remote: true }
-                                    },{
-                                    'data-toggle' => 'blog-tags', 
-                                    'data-placement' => 'top',    
-                                    :title => 'DELETE'} do%>
-                                        <i class="fa fa-trash"></i>
-                                        <% end %>
+                                        <%= link_to "", book_path(@book),method: :delete, class: "fa fa-trash",data: {confirm: "Are you sure?"}%>
                                     </li>
                                     <% end %>
                                 </ul>

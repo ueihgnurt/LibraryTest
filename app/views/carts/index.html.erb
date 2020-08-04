@@ -2,22 +2,27 @@
 <!-- # 3: carting, 0:pending, 1: accept, 2: decline -->
 <% if @carts %>
 <div class="table-users" style="margin-top: 70px;">
-    <div class="header">History of Trading</div>
+  <div class="header">History of Trading</div>
 
-    <table cellspacing="0">
-        <tr>
-            <th>User</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Accept/Decline</th>
-            <th>Option</th>
-        </tr>
+  <table cellspacing="0">
+    <tr>
+      <th>User
+        <%if @sort == "asc"%>
+          <%= link_to "", carts_path(sort:"desc"),class:"fa fa-arrow-up"%>
+        <%else%>
+          <%= link_to "", carts_path(sort:"asc"),class:"fa fa-arrow-down"%>
+        <%end%>
+      </th>
+      <th>Email</th>
+      <th>Date</th>
+      <th>Accept/Decline</th>
+      <th>Option</th>
+    </tr>
+    <% @carts.each do |c| %>
+    <%= render partial: "carts/cart", object: c, as: :c %>
+    <% end %>
 
-        <% @carts.each do |c| %>
-        <%= render partial: "carts/cart", object: c, as: :c %>
-        <% end %>
-
-    </table>
+  </table>
 </div>
 <% else %>
 <h1 style="text-align: center; margin-top: 100px;">

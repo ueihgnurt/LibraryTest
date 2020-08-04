@@ -68,11 +68,6 @@ yarn-debug.log*
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
-#Ignore Gemfile and Rubocop
-/Gemfile
-/.rubocop_disabled.yml
-/.rubocop_enabled.yml
-/.rubocop.yml
 
 config/settings.local.yml
 config/settings/*.local.yml

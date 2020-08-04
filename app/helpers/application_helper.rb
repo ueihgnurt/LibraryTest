@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   include Pagy::Frontend
 
@@ -28,14 +30,9 @@ module ApplicationHelper
   end
 
   # trang thai cua request
-  def check_status(cart)
-    if cart.verify == 0
-      'Pending'
-    elsif cart.verify == 1
-      'Accept'
-    elsif cart.verify == 2
-      'Decline'
-    end
+  def check_status(verify)
+    enum = ["Pending","Accept","Decline"]
+    return enum[verify]
 end
 
   # kiem tra xem item co trong gio chua

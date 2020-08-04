@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 class CartsController < ApplicationController
   before_action :find_user
   before_action :find_cart, only: %i[decline undo_quantity destroy accept]
   before_action :find_detail_cart, only: [:detail]
   before_action :cart_and_request, only: %i[show confirm update_request_params]
-
   def show
     @requests = @list_requests.order('created_at DESC')
   end
@@ -70,7 +71,19 @@ class CartsController < ApplicationController
   end
 
   def index
-    @carts = Cart.carts_admin.order('created_at DESC')
+    if params[:sort].blank?
+      @sort = "asc"
+    else
+      @sort = params[:sort]
+    end
+    @carts = Cart.carts_admin.map{ |c|          {id: c.id,
+                                                name: c.user.name,
+                                                email: c.user.email,
+                                                datefrom: c.requests[0].datefrom,
+                                                verify: c.verify}
+                                  }
+    return @carts.sort_by{ |c| c[:name]} if @sort == "asc"
+    @carts.sort_by{ |c| -c[:name]}
   end
 
   private
