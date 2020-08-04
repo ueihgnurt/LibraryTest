@@ -1,0 +1,37 @@
+<div class="table-users table-admin">
+  <table cellspacing="0" class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Cart id</th>
+        <th scope="col">User</th>
+        <th scope="col">created_at</th>
+        <th scope="col">Option</th>
+        <th scope="col">Details</th>
+      </tr>
+      <% @carts.each do |c|%>
+        <tr>
+          <th scope="col"><%=c.id%></th>
+          <th scope="col"><%=c.user.name%></th>
+          <th scope="col"><%=c.created_at%></th>
+          <th scope="col">
+            <%if c.verify=="Queue"%>
+                <%=link_to "Accept", cart_accept_path(c.id)%>
+                <span>/<span>
+                <%=link_to "Decline", cart_decline_path(c.id)%>
+            <%else%>
+                <a style="color:orange"><%=c.verify%></a>
+            <%end%>
+          </th>
+          <th scope="col">Details</th>
+        </tr>
+        <tr>
+        </tr>
+      <% end %>
+    </thead>
+  </table>
+  <tr>
+    <div class="apple_pagination">
+      <%= will_paginate @carts%>
+    </div>
+  </tr>
+</div>

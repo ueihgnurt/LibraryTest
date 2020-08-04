@@ -54,6 +54,9 @@
                                     <li>
                                         <%= link_to edit_book_path(@book),
                                     {
+                                        method: :post,
+                                        remote: true
+                                    },{
                                     'data-toggle' => 'blog-tags', 
                                     'data-placement' => 'top',
                                     :title => 'Edit'} do%>
