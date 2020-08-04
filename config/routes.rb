@@ -9,11 +9,9 @@ Rails.application.routes.draw do
 
   scope '(:locale)', locale: /en|vi/ do
     resources :users
-    resources :books
     resources :authors
     resources :reviews
     resources :requests
-    get "/my_cart/:id", to: "reviews#new"
     get "/my_cart/:id", to: "carts#my_cart"
     resources :carts do
       member do
