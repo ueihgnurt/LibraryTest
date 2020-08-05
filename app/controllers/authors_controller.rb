@@ -23,11 +23,9 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @q = Author.search(params[:q])
-    @search = @q.result(distinct: true)
     @books = @author.books
-    @authors = Author.all
-  end
+		@authors = Author.all
+	end
 
   def destroy
     return unless @author
@@ -46,7 +44,7 @@ class AuthorsController < ApplicationController
   end
 
   def find_author
-    @author = Author.find_by(params[:id])
+    @author = Author.find_by(id:params[:id])
     return if @author
 
     flash[:danger] = 'error'
