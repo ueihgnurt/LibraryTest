@@ -3,15 +3,15 @@
 	<td><%= u.name %></td>
 	<td><%= u.email%></td>
 	<td><%= c.requests[0].datefrom %></td>
-	<% if check_status(c.id) == "Accept" %>
-		<td style="color: green"><%= check_status(c.id) %></td>	
-	<% elsif check_status(c.id) == "Decline" %>
-		<td style="color: red;"><%= check_status(c.id) %></td>
-	<% elsif check_status(c.id) == "Pending" %>
-		<td style="color: orange;"><%= check_status(c.id) %></td>
+	<% if check_status(c.verify) == "Accept" %>
+		<td style="color: green"><%= check_status(c.verify) %></td>	
+	<% elsif check_status(c.verify) == "Decline" %>
+		<td style="color: red;"><%= check_status(c.verify) %></td>
+	<% elsif check_status(c.verify) == "Pending" %>
+		<td style="color: orange;"><%= check_status(c.verify) %></td>
 	<% end %>
 	<td>
-		<% if check_status(c.id) == "Pending"  %>
+		<% if check_status(c.verify) == "Pending"  %>
 			<%= link_to "", cart_path(c.id), method: :delete,class: "fa fa-trash fa-2x",style: "color: #77032F" %> <span class="fa-2x">/</span>
 			<%= link_to "", detail_cart_path(c), class: "fas fa-info fa-2x",style: "color: #035777" %>
 		<% else %>
